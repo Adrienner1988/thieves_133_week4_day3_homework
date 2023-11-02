@@ -65,18 +65,14 @@ ORDER BY COUNT(film_id) DESC;
 
 
 -- 7.Show all customers who have made a single payment above $6.99 (Use Subqueries) 
-SELECT first_name, last_name, customer.customer_id
-FROM customer
-WHERE customer_id IN (
-    SELECT amount
-    FROM payment
-    INNER JOIN customer
-    ON payment.customer_id = customer.customer_id
-    WHERE amount < 6.99
-);
+SELECT payment.amount, customer.first_name, customer.last_name
+FROM payment
+INNER JOIN customer ON payment.customer_id=customer.customer_id
+WHERE amount > 6.99;
+
 
 -- 8. How many free rentals did our stores give away? 
 SELECT amount
 FROM payment
-ORDER BY amount DESC;
--- There are no free rentals, did WHERE amount is 0 and there was no data. 
+WHERE amount < 0;
+-- There are 14,565 free rentals.
